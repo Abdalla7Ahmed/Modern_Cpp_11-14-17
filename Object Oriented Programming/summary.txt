@@ -1,0 +1,473 @@
+﻿Object Oriented Programming
+	• System is made up of objects
+	• Object is instance of a class
+	• Classes & objects are related
+	• Collaboration between objects define the behaviour of the system
+
+Composition
+	• Object composed in another object
+	• Represents "has-a" relation
+	• Reuse behavior
+
+here Car has an engine and uses its implementation to move
+class Car{ 
+	Engine m_Engine;
+public:
+	void Accelerate(){
+	m_Engine.Intake(); 
+	//etc
+	}
+}
+
+
+Inheritance
+	• Class inherits the features of another class
+	• Reuse & inherit behaviour
+	• Represents "is-a" relationship
+
+Syntax:-
+	class <child class> : <access modifier> <base class>
+	class Dog: public Animal
+
+Access Modifiers
+class Base{
+private:
+	MemberA				//Inaccessible outsid the class even if the class is inhereted 
+public:
+	MemberB				//Accessible
+protected:
+	MemberC				//Accessible only to child classes and the parent
+};
+
+1. public Access Modifiers :- 
+class Base{									class Child: public Base{
+private:									private:	
+	MemberA										MemberA				// Inaccessible
+public:										public:
+	MemberB										MemberB				// Accessible
+protected:									protected:
+	MemberC										MemberC				// Accessible only inside the child class
+}											}
+
+2. private Access Modifiers :- 
+class Base{									class Child: public Base{
+private:									private:	
+	MemberA										MemberA				// Inaccessible
+public:										private:
+	MemberB										MemberB				// Accessible only inside the child class
+protected:									private:
+	MemberC										MemberC				// Accessible only inside the child class
+}											}
+
+3. protected Access Modifiers :- 
+class Base{									class Child: public Base{
+private:									private:	
+	MemberA										MemberA				// Inaccessible
+public:										protected:
+	MemberB										MemberB				// Accessible only inside the child class
+protected:									protected:
+	MemberC										MemberC				// Accessible only inside the child class
+}											}
+
+note that 
+• Constructors execute from base to child
+• Destructors execute from child to base
+• Base data members will be part of child object 
+• the private members of Base class will be part of memory in the child class but it can't access it 
+
+// how virtual keyword work in c++
+🌟 Exploring the Magic of Virtual Mechanism in C++! 🌟
+
+Have you ever wondered how C++ achieves dynamic polymorphism? Look no further! Today, let's dive into the fascinating world of virtual mechanisms in C++ and uncover the secrets behind the magic.
+
+🔎 Understanding the Basics:
+In C++, the concept of virtual functions allows us to achieve runtime polymorphism, where the appropriate function is called based on the actual object type rather than the declared type. This enables us to write more flexible and extensible code.
+
+⚙️ The Virtual Table:
+At the heart of the virtual mechanism lies the virtual table, also known as the vtable or virtual function table. Each class that contains at least one virtual function has its own virtual table. This table is essentially an array of function pointers, pointing to the virtual functions of the class.
+
+🔗 The Virtual Pointer:
+To make use of the virtual table, a special member called the virtual pointer (vptr) is added to each object of a class with virtual functions. The vptr points to the virtual table of that particular class. When a virtual function is called through a base class pointer or reference, the vptr is used to determine the correct function to invoke.
+
+🚀 Behind the Scenes:
+1️⃣ When an object is created, memory is allocated for both the object itself and the virtual table.
+2️⃣ The vptr is initialized to point to the virtual table of the class.
+3️⃣ If a derived class overrides a virtual function, the corresponding entry in the virtual table is updated to point to the derived class's implementation.
+4️⃣ When a virtual function is called, the compiler generates code that uses the vptr to access the appropriate function from the virtual table.
+
+🔒 Benefits of Virtual Mechanism:
+1️⃣ Dynamic Polymorphism: With virtual functions and the virtual table, C++ enables objects to exhibit different behaviors based on their actual type, allowing for cleaner and more adaptable code.
+2️⃣ Extensibility: The virtual mechanism allows you to easily add new derived classes without modifying existing code, promoting code reuse and scalability.
+3️⃣ Run-time Flexibility: The determination of the function to be called happens at runtime, enhancing flexibility and adaptability in complex systems.
+
+ Wrapping Up:
+The virtual mechanism in C++ empowers developers to harness the full potential of polymorphism, making code more flexible, reusable, and maintainable. Understanding the inner workings of the virtual table and virtual pointer equips you to write elegant and robust object-oriented code.
+
+Feel free to share your experiences and thoughts on using the virtual mechanism in C++. Let's continue embracing the power of dynamic polymorphism together! 🚀💪
+
+#CPlusPlus #VirtualMechanism #Polymorphism #ObjectOrientedProgramming
+
+
+// final and override kaywords 
+🌟 Unleashing the Power of `final` and `override` in C++! 🌟
+
+When it comes to writing clean and maintainable code in C++, the `final` and `override` keywords play a significant role in enhancing code correctness, readability, and preventing potential pitfalls. Today, let's explore these keywords and understand how they can benefit your C++ development journey.
+
+🔒 The `final` Keyword:
+The `final` keyword is used to indicate that a class, member function, or virtual function cannot be overridden or further derived. Let's take a closer look at its applications:
+
+1️⃣ Finalizing a Class:
+By marking a class as `final`, you explicitly state that it cannot be inherited from. This is useful when you want to prevent any further extension or specialization of a class, ensuring its integrity and avoiding unintended modifications.
+
+Example:
+```cpp
+class Base final {
+    // Class implementation
+};
+```
+
+2️⃣ Finalizing a Function:
+When you mark a member function as `final`, it cannot be overridden by derived classes. This is particularly helpful when you want to enforce a specific behavior and prevent further customization.
+
+Example:
+```cpp
+class Base {
+public:
+    virtual void doSomething() final {
+        // Implementation
+    }
+};
+
+class Derived : public Base {
+public:
+    // Error: Attempting to override a final function
+    void doSomething() override {
+        // Derived implementation
+    }
+};
+```
+
+🔃 The `override` Keyword:
+The `override` keyword is used to explicitly indicate that a member function is intended to override a virtual function from a base class. It helps in ensuring that the function you intended to override is indeed being overridden, avoiding subtle bugs and accidental mistakes.
+
+Example:
+```cpp
+class Base {
+public:
+    virtual void doSomething() {
+        // Base implementation
+    }
+};
+
+class Derived : public Base {
+public:
+    void doSomething() override {
+        // Derived implementation
+    }
+};
+```
+
+In the example above, by using the `override` keyword, you make it clear that `Derived::doSomething()` is intended to override `Base::doSomething()`. If there is a mistake in the function signature or the base class has no matching function, the compiler will generate an error, helping you catch potential bugs early.
+
+Wrapping Up:
+By leveraging the power of the `final` and `override` keywords in C++, you can ensure code correctness, prevent unintended modifications, and enhance code readability. These keywords enable you to express your intentions explicitly, making your code more maintainable and less prone to errors.
+
+Embrace the benefits of `final` and `override` in your C++ projects and let them guide you towards creating robust and reliable software.
+
+Share your experiences and thoughts on using `final` and `override` in C++. Let's continue to write clean and efficient code together! 💪🚀
+
+
+// Upcasting , Downcasting and  Object Slicing
+
+🌟 The Magic of Upcasting, Downcasting, and Object Slicing in C++! 🌟
+
+In C++, the concepts of upcasting, downcasting, and object slicing allow us to work with inheritance hierarchies and polymorphic objects in a flexible and powerful way. Let's explore each of these concepts and understand how they shape our object-oriented code.
+
+🔼 Upcasting:
+Upcasting refers to the process of treating a derived class object as an object of its base class. It allows you to assign a derived class object to a base class pointer or reference. Upcasting is safe and implicit, as every derived class object can be viewed as an object of its base class.
+
+Example:
+```cpp
+class Base {
+public:
+    void baseFunction() {
+        // Base class function implementation
+    }
+};
+
+class Derived : public Base {
+public:
+    void derivedFunction() {
+        // Derived class function implementation
+    }
+};
+
+int main() {
+    Derived derivedObj;
+    Base* basePtr = &derivedObj;  // Upcasting
+
+    // Accessing base class function
+    basePtr->baseFunction();
+
+    return 0;
+}
+```
+
+In the example above, an object of the `Derived` class is upcasted to a pointer of type `Base`. This allows us to access the base class function `baseFunction()` through the base class pointer `basePtr`.
+
+⬇️ Downcasting:
+Downcasting refers to the process of treating a base class object as an object of its derived class. However, downcasting is not implicitly supported in C++ and requires explicit type casting using either `static_cast`, `dynamic_cast`, or `reinterpret_cast`. Downcasting is potentially unsafe since the base class object may not actually be an object of the derived class.
+
+Example using `static_cast`:
+```cpp
+class Base {
+public:
+    virtual ~Base() {}
+};
+
+class Derived : public Base {
+public:
+    void derivedFunction() {
+        // Derived class function implementation
+    }
+};
+
+int main() {
+    Base* basePtr = new Derived();
+
+    // Downcasting using static_cast
+    Derived* derivedPtr = static_cast<Derived*>(basePtr);
+
+    // Accessing derived class function
+    derivedPtr->derivedFunction();
+
+    delete basePtr;
+
+    return 0;
+}
+```
+
+In the example above, a base class pointer `basePtr` is initially pointing to a dynamically allocated object of the `Derived` class. By using `static_cast`, we explicitly downcast the base class pointer to a derived class pointer `derivedPtr`. This enables us to access the derived class function `derivedFunction()`.
+
+🔪 Object Slicing:
+Object slicing occurs when an object of a derived class is assigned to an object of its base class, resulting in the loss of derived class-specific information. Only the base class portion of the object is retained, and any additional data or behavior from the derived class is sliced off.
+
+Example:
+```cpp
+class Base {
+public:
+    virtual void print() {
+        cout << "Base class" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void print() override {
+        cout << "Derived class" << endl;
+    }
+};
+
+int main() {
+    Derived derivedObj;
+    Base baseObj = derivedObj;  // Object slicing
+
+    baseObj.print();  // Output: "Base class"
+
+    return 0;
+}
+```
+
+In the example above, the `Derived` class overrides the `print()` function of the `Base` class. However, when the `derivedObj` is assigned to the `baseObj`, object slicing occurs. As a result, calling the `print()` function on `baseObj` will invoke the base class implementation, losing the derived class-specific behavior.
+
+Wrapping Up:
+Upcasting, downcasting, and object slicing are important concepts when working with inheritance hierarchies in C++. Upcasting allows treating derived class objects as base class objects, while downcasting requires explicit type casting and allows treating base class objects as derived class objects. Object slicing occurs when assigning a derived class object to a base class object, resulting in the loss of derived class-specific information.
+
+By understanding and utilizing these concepts effectively, you can leverage the power of polymorphism and create flexible and extensible code in your C++ projects.
+
+Share your experiences and thoughts on upcasting, downcasting, and object slicing in C++. Let's continue to explore the wonders of object-oriented programming together! 💪🚀
+
+#CPlusPlus #Upcasting #Downcasting #ObjectSlicing #Polymorphism #Inheritance
+
+
+//Abstract classes & pure virtual functions
+🌟 Embracing Abstract Classes and Pure Virtual Functions in C++! 🌟
+
+In C++, abstract classes and pure virtual functions are powerful tools for designing interfaces and implementing polymorphism. They allow you to define common behavior and enforce derived classes to provide specific implementations. Let's delve into the world of abstract classes and pure virtual functions and understand how they contribute to building flexible and extensible code.
+
+🎨 Abstract Classes:
+An abstract class in C++ is a class that cannot be instantiated and is meant to serve as a base for derived classes. It contains one or more pure virtual functions, making it an incomplete class that requires derived classes to provide the missing functionality. Abstract classes are designed to define a common interface and establish a contract for derived classes.
+
+Example:
+```cpp
+class Shape {
+public:
+    virtual double calculateArea() const = 0;  // Pure virtual function
+
+    virtual ~Shape() {}
+};
+
+class Rectangle : public Shape {
+private:
+    double width;
+    double height;
+
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    double calculateArea() const override {
+        return width * height;
+    }
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    double calculateArea() const override {
+        return 3.14159 * radius * radius;
+    }
+};
+
+int main() {
+    Shape* shape1 = new Rectangle(5, 3);
+    Shape* shape2 = new Circle(2.5);
+
+    double area1 = shape1->calculateArea();
+    double area2 = shape2->calculateArea();
+
+    delete shape1;
+    delete shape2;
+
+    return 0;
+}
+```
+
+In the example above, the `Shape` class is an abstract class that defines a pure virtual function `calculateArea()`. This function is intended to calculate the area of different shapes but does not provide an implementation. The `Rectangle` and `Circle` classes inherit from `Shape` and provide their own implementations of `calculateArea()`. By utilizing the abstract class and pure virtual function, we enforce the derived classes to implement the specific behavior required by the interface.
+
+🎯 Pure Virtual Functions:
+A pure virtual function is a function declared in a base class without providing an implementation. It is denoted by appending `= 0` to the function declaration. Pure virtual functions establish a contract that derived classes must fulfill by providing their own implementations. Classes that contain pure virtual functions become abstract classes and cannot be instantiated directly.
+
+Example:
+```cpp
+class Animal {
+public:
+    virtual void makeSound() const = 0;  // Pure virtual function
+
+    virtual ~Animal() {}
+};
+
+class Dog : public Animal {
+public:
+    void makeSound() const override {
+        cout << "Woof!" << endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    void makeSound() const override {
+        cout << "Meow!" << endl;
+    }
+};
+
+int main() {
+    Animal* animal1 = new Dog();
+    Animal* animal2 = new Cat();
+
+    animal1->makeSound();  // Output: "Woof!"
+    animal2->makeSound();  // Output: "Meow!"
+
+    delete animal1;
+    delete animal2;
+
+    return 0;
+}
+```
+
+In the example above, the `Animal` class is an abstract class that declares a pure virtual function `makeSound()`. Derived classes `Dog` and `Cat` inherit from `Animal` and provide their own implementations of `makeSound()`. By using pure virtual functions, we establish a common interface for different animal types while allowing each derived class to define its unique behavior.
+
+Wrapping Up:
+Abstract classes and pure virtual functions are invaluable tools for designing interfaces and achieving polymorphism in C++. Abstract classes provide a blueprint for derived classes and enforce the implementation of specific behavior. Pure virtual functions declare functions without implementations, ensuring derived classes fulfill the contract by providing their own implementations.
+
+By utilizing abstract classes and pure virtual functions, you can build flexible and extensible code that can adapt to different implementations and behaviors.
+
+Share your experiences and thoughts on abstract classes and pure virtual functions in C++. Let's continue to embrace the power of interfaces and polymorphism together! 💪🚀
+
+#CPlusPlus #AbstractClasses #PureVirtualFunctions #Polymorphism #ObjectOrientedProgramming
+
+//Multiple Diamond Inheritance
+🌟 Exploring Multiple Diamond Inheritance in C++! 🌟
+
+Multiple diamond inheritance is a feature in C++ that allows a class to inherit from multiple base classes, where the inheritance hierarchy forms a diamond shape. This scenario can introduce certain challenges and complexities. Let's dive into multiple diamond inheritance and understand how it works with an example.
+
+💎 Understanding the Diamond Inheritance Problem:
+Consider a scenario where we have a base class called `Animal`, and two intermediate classes called `Mammal` and `Bird` that inherit from `Animal`. Now, let's say we want to create a class called `Bat` that inherits from both `Mammal` and `Bird`. The inheritance hierarchy would form a diamond shape, and this is where the diamond inheritance problem arises.
+
+```
+        Animal
+        /    \
+     Mammal  Bird
+        \    /
+         Bat
+```
+
+The diamond inheritance problem occurs because `Bat` class inherits two copies of the `Animal` class due to multiple inheritance. This can lead to ambiguity when accessing members or calling functions that are inherited from the common base class.
+
+🦇 Resolving the Diamond Inheritance Problem with Virtual Inheritance:
+To resolve the diamond inheritance problem, we can use virtual inheritance. Virtual inheritance ensures that only one instance of the common base class is shared among derived classes, eliminating ambiguity.
+
+Example:
+```cpp
+class Animal {
+public:
+    void eat() {
+        cout << "Animal is eating." << endl;
+    }
+};
+
+class Mammal : virtual public Animal {
+public:
+    void move() {
+        cout << "Mammal is moving." << endl;
+    }
+};
+
+class Bird : virtual public Animal {
+public:
+    void fly() {
+        cout << "Bird is flying." << endl;
+    }
+};
+
+class Bat : public Mammal, public Bird {
+public:
+    void sleep() {
+        cout << "Bat is sleeping." << endl;
+    }
+};
+
+int main() {
+    Bat bat;
+    bat.eat();   // Output: "Animal is eating."
+    bat.move();  // Output: "Mammal is moving."
+    bat.fly();   // Output: "Bird is flying."
+    bat.sleep(); // Output: "Bat is sleeping."
+
+    return 0;
+}
+```
+
+In the example above, virtual inheritance is used for both `Mammal` and `Bird` classes to inherit from `Animal`. This ensures that only one instance of `Animal` is shared among them, resolving the diamond inheritance problem. The `Bat` class then inherits from both `Mammal` and `Bird` without duplicating the `Animal` class.
+
+Wrapping Up:
+Multiple diamond inheritance can be a powerful but challenging aspect of C++ inheritance. By utilizing virtual inheritance, we can resolve the diamond inheritance problem and ensure that only one instance of the common base class is shared among derived classes.
+
+Understanding and managing multiple diamond inheritance is crucial to designing complex inheritance hierarchies and ensuring clarity and correctness in your code.
+
+Share your experiences and thoughts on multiple diamond inheritance in C++. Let's continue to explore the intricacies of inheritance together! 💪🚀
+
+#CPlusPlus #MultipleInheritance #DiamondInheritance #VirtualInheritance #ObjectOrientedProgramming

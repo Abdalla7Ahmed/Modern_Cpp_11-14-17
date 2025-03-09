@@ -1,0 +1,56 @@
+									Resource Management
+• Some classes own a resource
+• This resource may be a pointer, file handle, socket, etc
+• Such resources may be acquired in the constructor
+• Subsequently, you have to decide the action in case objects of such classes are copied, moved or destroyed
+• E.g. on destruction, the resource must be released to avoid leaks
+• Similarly, on copy or move the resource must be handled accordingly
+
+							Rule Of 5
+• Consequently, you should implement the rule of 5 for such classes
+• If a class has ownership semantics, then you must provide a user-defined
+	1• Destructor
+	2• Copy constructor
+	3• Copy assignment operator
+	4• Move constructor
+	5• Move assignment operator
+• This is to ensure proper handling of the underlying resource
+
+							Rule of O
+• If a class does not have ownership semantics, then do not provide any user defined function from the rule of 5
+• This is called the "rule of 0"
+• This way the compiler will automatically synthesize the necessary functions
+• Providing user-defined implementation of some functions will prevent the compiler from synthesizing others
+
+
+• if we implement any of these 5 function , then move operations become deleted  
+• if we provide a custom any move operations , then the other move operation and the copy operations become deleted 
+
+
+Custom			Copy Constructor	        Copy Assignment			        Move Constructor	        Move Assignment		        Destructor
+Copy constructor	Custom				=default				=delete				=delete				=default		
+Copy assignment		=default			Custom					=delete				=delete				=default	
+Move constructor	=delete				=delete					Custom				=delete				=default
+Move assignment		=delete				=delete					=delete				Custom				=default
+Destructor		=default			=default				=delete				=delete				Custom
+None			=default			=default				=default			=default			=default
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

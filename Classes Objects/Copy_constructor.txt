@@ -1,0 +1,31 @@
+	
+
+	Number n1;
+	Number n2(n1);
+	n1.Set_Value(50);
+	std::cout << n1.Get_Value() << std::endl;
+
+	// the problem with the copy constructor 
+	int* ptr1 = new int(0);
+	// shallow copy
+	int* ptr2 = ptr1;	// ptr1 and ptr2 holds the same address in memory 
+	// deep copy
+	int* ptr3 = new int(*ptr1); // reserve a new memory space and then assign it with the value that ptr1 hold
+	delete ptr1;		// no problem but , 
+	//delete ptr2;		// there is the problem , we try to delete inaccessible address because we delete it already,the program will crash
+	
+	// the same problem occur on the default copy constructor , we have to implement user defined copy constructor				
+				
+				
+				
+				
+				Rule Of 3
+==> All should be defined if a user implements any of them
+• Destructor
+• Copy constructor
+• Copy assignment operator
+==> This will be due to allocation of some resource in a constructor
+• Destructor will free the resource
+• Copy constructor will perform a deep copy
+• Copy assignment operation will also perform a deep copy
+==> Not implementing user defined operations can lead to memory leak or shallow copy

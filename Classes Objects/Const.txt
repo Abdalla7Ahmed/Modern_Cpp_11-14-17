@@ -1,0 +1,10 @@
+const Member Functions & const Class Objects
+• Constant member functions are those functions that are denied permission to change the values of the data members of their class
+• the keyword “const” is appended to the function prototype and also to the function definition header.
+• the objects of a class can also be declared as const.
+• Any attempt to change the data member of const objects results in a compile-time error.
+• Constant object can only call constant members.
+• When a function is declared as const, it can be called on any type of object
+• Non-const functions can only be called by non-const objects.
+• Constant objects are initialized at the time of decleration using constructor
+

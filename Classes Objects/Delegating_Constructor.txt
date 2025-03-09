@@ -1,0 +1,8 @@
+Delegating Constructor
+• Allows a constructor to invoke another constructor
+• Replacement for common initialization
+• Reduces duplicate initialization code in multiple constructors
+	class Class{
+	Class(): Class(val1, val2){
+	Class(arg1, arg2){
+	//Initialization code
